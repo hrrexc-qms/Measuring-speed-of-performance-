@@ -31,7 +31,7 @@
             -webkit-appearance: none; 
             margin: 0; 
         }
-        input[type=number], input[type=text].avg-time, input[type=text].avg-count {
+        input[type=number] {
             -moz-appearance: textfield;
             width: 70px !important;
             text-align: center;
@@ -87,28 +87,84 @@
             justify-content: center;
             gap: 5px;
         }
-        /* تمييز الحقول الفارغة عند الخطأ */
         .is-invalid {
             border: 2px solid #dc3545 !important;
         }
+               /* تنسيق الفوتر الثابت */
+.footer-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 10px 0;
+    text-align: center;
+    border-top: 2px solid #faa619; 
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    z-index: 999;
+}
+.brand-footer {
+    color: #1a953e; 
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.dev-footer {
+    color: #faa619; 
+    font-size: 0.8em;
+    margin-top: 2px;
+}
     </style>
 </head>
 <body>
 
     <div class="container" id="loginSection">
-        <div class="login-container">
-            <h4 class="text-center mb-4" style="color: var(--main-green);"> تسجيل الدخول للنموذج </h4>
-            <div class="mb-3">
-                <label>الرقم الوظيفي</label>
-                <input type="text" id="empId" class="form-control w-100 text-start" placeholder="أدخل الرقم الوظيفي">
-            </div>
-            <div class="mb-3">
-                <label>كود التحقق</label>
-                <input type="password" id="authCode" class="form-control w-100 text-start" placeholder="أدخل كود التحقق">
-            </div>
-            <button class="btn btn-custom-green w-100" onclick="verifyUser()">دخول</button>
-            <div id="loginError" class="text-danger text-center mt-2" style="display: none;">البيانات غير صحيحة!</div>
-        </div>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="login-container">
+    
+    <h4 class="text-center mb-4" style="color: var(--main-green);">
+        تسجيل الدخول للنموذج
+    </h4>
+
+    <p style="text-align: justify;">
+        يهدف النموذج التالي لقياس كفاءة موظفي خدمة العملاء والصناديق في تنفيذ العمليات وضمانة للسرعة والدقة بالاضافة الى قياس اداء سرعة موظفي العد بالفروع
+    </p>
+
+    <hr>
+
+    <div class="mb-3">
+        <label>الرقم الوظيفي</label>
+        <input type="text" id="empId" class="form-control w-100 text-start" placeholder="أدخل الرقم الوظيفي">
+    </div>
+
+    <div class="mb-3">
+        <label>كود التحقق</label>
+        <input type="password" id="authCode" class="form-control w-100 text-start" placeholder="أدخل كود التحقق">
+        <small class="text-muted">
+            فضلاً قم بإدخال كود التحقق المرسل لك من قبل مختص الجودة
+        </small>
+    </div>
+
+    <button class="btn btn-custom-green w-100" onclick="verifyUser()">دخول</button>
+
+    <div id="loginError" class="text-danger text-center mt-2" style="display: none;">
+        البيانات غير صحيحة!
+    </div>
+
+    <hr>
+
+    <div class="text-center mt-3">
+        <small class="text-muted d-block mb-2">
+            في حال عدم توفر كود التحقق يرجى التواصل مع مختص الجودة
+        </small>
+
+        <a href="https://wa.me/message/AF2OWIDTJD2RL1" target="_blank" class="btn btn-success">
+            <i class="bi bi-whatsapp"></i>
+            تواصل عبر واتساب
+        </a>
+    </div>
+
+</div>
     </div>
 
     <div class="container" id="reportSection">
@@ -121,7 +177,6 @@
                 </div>
                 
                 <div class="col-md-4 text-center">
-                    <!-- <h5 style="color: var(--main-green); font-weight: bold; margin-bottom: 5px;">عنوان الشركة أو الإدارة هنا</h5> -->
                     <h5 style="color: var(--main-orange); font-weight: bold;">نموذج تقييم سرعة أداء الموظفين</h5>
                 </div>
                 
@@ -142,12 +197,10 @@
                         </tr>
                         <tr>
                             <th class="table-sub-header">أسرع موظف</th>
-                            <th class="table-sub-header">أبطأ موظف</th>
-                            <th class="table-sub-header">المتوسط</th>
-                        </tr>
+                            <th class="table-sub-header">موظف متوسط</th> <th class="table-sub-header">أبطأ موظف</th> </tr>
                     </thead>
                     <tbody id="table1Body">
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
 
@@ -160,13 +213,11 @@
                                 <th class="table-header">م</th>
                                 <th class="table-header" style="width: 15%;">الفئة المعدودة</th>
                                 <th class="table-sub-header">أسرع موظف</th>
-                                <th class="table-sub-header">أبطأ موظف</th>
-                                <th class="table-sub-header">المتوسط</th>
-                                <th class="table-header" style="width: 20%;">ملاحظة</th>
+                                <th class="table-sub-header">موظف متوسط</th> <th class="table-sub-header">أبطأ موظف</th> <th class="table-header" style="width: 20%;">ملاحظة</th>
                             </tr>
                         </thead>
                         <tbody id="table2Body">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -175,8 +226,19 @@
         <div class="text-center mt-4">
             <button class="btn btn-custom-green px-5 submit-btn" onclick="submitData()">إرسال التقرير</button>
         </div>
+        <br><br><br><br>
+   <footer>
+    <div class="footer-container">
+    <div class="brand-footer">
+       شركة الروضة للصرافة والتحويلات المالية -2026 © 
     </div>
-
+    <div class="dev-footer">
+       تصميم وتطوير: محمد أحمد الشرفي
+    </div>
+</div>
+</footer>
+    </div>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwXH-e_FVJrkjNGvsqFj42duqn0DCCDVb2_MEv8ZIvizDNzLInj8AaZvkD52w6my0wjjw/exec"; 
@@ -196,11 +258,8 @@
     const currencyCategories = ["1000", "500", "250", "200", "100", "50"];
 
     $(document).ready(function() {
-        // إضافة إمكانية الدخول بالضغط على زر Enter
         $('#empId, #authCode').on('keypress', function(e) {
-            if (e.which === 13) {
-                verifyUser();
-            }
+            if (e.which === 13) { verifyUser(); }
         });
 
         const table1Body = $('#table1Body');
@@ -209,24 +268,9 @@
                 <tr>
                     <td>${index + 1}</td>
                     <td class="text-start operation-name">${op}</td>
-                    <td>
-                        <div class="input-wrapper">
-                            <input type="number" class="form-control form-control-sm fast-time">
-                            <span>ثانية</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-wrapper">
-                            <input type="number" class="form-control form-control-sm slow-time">
-                            <span>ثانية</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-control form-control-sm avg-time" readonly>
-                            <span>دقيقة</span>
-                        </div>
-                    </td>
+                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm fast-time"><span>ثانية</span></div></td>
+                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm avg-time"><span>ثانية</span></div></td>
+                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm slow-time"><span>ثانية</span></div></td>
                     <td><input type="text" class="form-control form-control-sm note-time w-100"></td>
                 </tr>
             `);
@@ -238,24 +282,9 @@
                 <tr>
                     <td>${index + 1}</td>
                     <td class="currency-name">فئة ${cat}</td>
-                    <td>
-                        <div class="input-wrapper">
-                            <input type="number" class="form-control form-control-sm fast-count">
-                            <span>مليون</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-wrapper">
-                            <input type="number" class="form-control form-control-sm slow-count">
-                            <span>مليون</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-wrapper">
-                            <input type="text" class="form-control form-control-sm avg-count" readonly>
-                            <span>مليون</span>
-                        </div>
-                    </td>
+                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm fast-count"><span>مليون</span></div></td>
+                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm avg-count"><span>مليون</span></div></td>
+                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm slow-count"><span>مليون</span></div></td>
                     <td><input type="text" class="form-control form-control-sm note-count w-100"></td>
                 </tr>
             `);
@@ -267,7 +296,6 @@
         const code = $('#authCode').val();
         if (!id || !code) { alert("يرجى إدخال كافة البيانات"); return; }
         $('#loginSection button').text("جاري التحقق...").prop("disabled", true);
-
         fetch(`${SCRIPT_URL}?id=${id}&code=${code}`)
             .then(res => res.json())
             .then(data => {
@@ -290,117 +318,73 @@
             });
     }
 
-    $(document).on('input', '.fast-time, .slow-time', function() {
-        let row = $(this).closest('tr');
-        $(this).removeClass('is-invalid'); // إزالة اللون الأحمر عند الكتابة
-        let f = parseFloat(row.find('.fast-time').val()) || 0;
-        let s = parseFloat(row.find('.slow-time').val()) || 0;
+    $(document).on('input', 'input', function() {
+        $(this).removeClass('is-invalid');
+    });
+
+    async function submitData() {
+        let allValid = true;
         
-        if (f > 0 && s > 0) {
-            let averageInSeconds = (f + s) / 2;
-            let averageInMinutes = averageInSeconds / 60;
-            row.find('.avg-time').val(averageInMinutes.toFixed(2));
-        } else {
-            row.find('.avg-time').val('');
-        }
-    });
-
-    $(document).on('input', '.fast-count, .slow-count', function() {
-        let row = $(this).closest('tr');
-        $(this).removeClass('is-invalid'); // إزالة اللون الأحمر عند الكتابة
-        let f = parseFloat(row.find('.fast-count').val()) || 0;
-        let s = parseFloat(row.find('.slow-count').val()) || 0;
-        row.find('.avg-count').val(f > 0 && s > 0 ? ((f + s) / 2).toFixed(2) : '');
-    });
-async function submitData() {
-    // 1. التحقق من تعبئة كافة الحقول الإلزامية (أسرع وأبطأ موظف)
-    let allValid = true;
-    
-    // فحص الجدول الأول
-    $('#table1Body tr').each(function() {
-        let fast = $(this).find('.fast-time');
-        let slow = $(this).find('.slow-time');
-        if(!fast.val() || !slow.val()) {
-            if(!fast.val()) fast.addClass('is-invalid');
-            if(!slow.val()) slow.addClass('is-invalid');
-            allValid = false;
-        }
-    });
-
-    // فحص الجدول الثاني فقط إذا كان ظاهراً
-    if($('#table2Container').is(':visible')) {
-        $('#table2Body tr').each(function() {
-            let fast = $(this).find('.fast-count');
-            let slow = $(this).find('.slow-count');
-            if(!fast.val() || !slow.val()) {
-                if(!fast.val()) fast.addClass('is-invalid');
-                if(!slow.val()) slow.addClass('is-invalid');
+        // تعديل السطر التالي ليفحص الحقول المرئية فقط
+        $('input[type=number]:visible').each(function() {
+            if(!$(this).val()) {
+                $(this).addClass('is-invalid');
                 allValid = false;
             }
         });
-    }
 
-    if(!allValid) {
-        alert("عذراً، يجب تعبئة كافة حقول (أسرع وأبطأ موظف) لجميع البنود قبل الإرسال.");
-        return;
-    }
+        if(!allValid) {
+            alert("عذراً، يجب تعبئة كافة الحقول المطلوبة قبل الإرسال.");
+            return;
+        }
 
-    // 2. تجهيز زر الإرسال والحالة
-    const actionBtn = $('.submit-btn');
-    actionBtn.text("جاري الإرسال...").prop("disabled", true);
+        const actionBtn = $('.submit-btn');
+        actionBtn.text("جاري الإرسال...").prop("disabled", true);
 
-    // 3. تجميع بيانات الجداول
-    let table1 = [];
-    $('#table1Body tr').each(function() {
-        table1.push({
-            name: $(this).find('.operation-name').text(),
-            fast: $(this).find('.fast-time').val(),
-            slow: $(this).find('.slow-time').val(),
-            avg: $(this).find('.avg-time').val(),
-            note: $(this).find('.note-time').val() 
-        });
-    });
-
-    let table2 = [];
-    $('#table2Body tr').each(function() {
-        table2.push({
-            name: $(this).find('.currency-name').text(),
-            fast: $(this).find('.fast-count').val(),
-            slow: $(this).find('.slow-count').val(),
-            avg: $(this).find('.avg-count').val(),
-            note: $(this).find('.note-count').val()
-        });
-    });
-
-    // 4. بناء الـ Payload مع إضافة التوكن (token) للأمان
-    const payload = {
-        token: currentUser.token, // <<< هذا هو المفتاح الضروري للسماح بالحفظ
-        emp_id: currentUser.emp_id,
-        name: currentUser.full_name,
-        entity: currentUser.entity_name,
-        table1: table1,
-        table2: table2
-    };
-
-    // 5. عملية الإرسال الفعلي
-    try {
-        await fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', // نستخدم no-cors لتجنب مشاكل CORS مع Google Script
-            body: JSON.stringify(payload)
+        let table1 = [];
+        $('#table1Body tr').each(function() {
+            table1.push({
+                name: $(this).find('.operation-name').text(),
+                fast: $(this).find('.fast-time').val(),
+                avg: $(this).find('.avg-time').val(), 
+                slow: $(this).find('.slow-time').val(),
+                note: $(this).find('.note-time').val() 
+            });
         });
 
-        // ملاحظة: عند استخدام no-cors لا يمكننا قراءة الاستجابة، لكن سنفترض النجاح إذا لم يحدث خطأ اتصال
-        alert("تم إرسال التقرير بنجاح! سيتم إعادة تحميل الصفحة.");
-        location.reload(); // إعادة تحميل الصفحة لتصفير البيانات
-        
-    } catch (error) {
-        console.error("Error:", error);
-        alert("حدث خطأ أثناء الإرسال. يرجى التأكد من اتصال الإنترنت.");
-        actionBtn.text("إرسال التقرير").prop("disabled", false);
+        let table2 = [];
+        $('#table2Body tr').each(function() {
+            table2.push({
+                name: $(this).find('.currency-name').text(),
+                fast: $(this).find('.fast-count').val(),
+                avg: $(this).find('.avg-count').val(), 
+                slow: $(this).find('.slow-count').val(),
+                note: $(this).find('.note-count').val()
+            });
+        });
+
+        const payload = {
+            token: currentUser.token,
+            emp_id: currentUser.emp_id,
+            name: currentUser.full_name,
+            entity: currentUser.entity_name,
+            table1: table1,
+            table2: table2
+        };
+
+        try {
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(payload)
+            });
+            alert("تم إرسال التقرير بنجاح!");
+            location.reload();
+        } catch (error) {
+            alert("حدث خطأ أثناء الإرسال.");
+            actionBtn.text("إرسال التقرير").prop("disabled", false);
+        }
     }
-}
     </script>
 </body>
-
 </html>
