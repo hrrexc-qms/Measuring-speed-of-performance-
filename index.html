@@ -36,6 +36,11 @@
             width: 70px !important;
             text-align: center;
         }
+        /* تنسيق إضافي لحقول المبالغ النصية */
+        input.currency-input {
+            width: 90px !important;
+            text-align: center;
+        }
         .login-container {
             max-width: 400px;
             margin: 100px auto;
@@ -90,29 +95,29 @@
         .is-invalid {
             border: 2px solid #dc3545 !important;
         }
-               /* تنسيق الفوتر الثابت */
-.footer-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #ffffff;
-    padding: 10px 0;
-    text-align: center;
-    border-top: 2px solid #faa619; 
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-    z-index: 999;
-}
-.brand-footer {
-    color: #1a953e; 
-    font-weight: bold;
-    font-size: 0.9em;
-}
-.dev-footer {
-    color: #faa619; 
-    font-size: 0.8em;
-    margin-top: 2px;
-}
+        /* تنسيق الفوتر الثابت */
+        .footer-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+            border-top: 2px solid #faa619; 
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 999;
+        }
+        .brand-footer {
+            color: #1a953e; 
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .dev-footer {
+            color: #faa619; 
+            font-size: 0.8em;
+            margin-top: 2px;
+        }
     </style>
 </head>
 <body>
@@ -183,6 +188,13 @@
                 <div class="col-md-4 text-end">
                     <img src="logo.jpeg" alt="شعار الشركة" class="header-logo">
                 </div>
+            </div>
+
+            <div class="alert alert-info py-2" style="font-size: 13px; color: var(--main-green); background-color: #e8f5e9; border: 1px solid var(--main-green);">
+                <strong>ملاحظة إرشادية للوقت:</strong>
+                (200 ثانية = 3 دقائق و 20 ثانية) |
+                (300 ثانية = 5 دقائق) |
+                (600 ثانية = 10 دقائق).
             </div>
 
             <h6 style="color: var(--main-orange);">أولاً: وقت تنفيذ العمليات</h6>
@@ -262,15 +274,24 @@
             if (e.which === 13) { verifyUser(); }
         });
 
+        // دالة مساعدة لتحويل الأرقام العربية الهندية إلى إنجليزية
+        function convertArabicToEnglish(str) {
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return str.replace(/[٠-٩]/g, function(d) {
+                return arabicNumbers.indexOf(d);
+            });
+        }
+
         const table1Body = $('#table1Body');
         operations.forEach((op, index) => {
+            // تم إضافة max="600" وكود oninput لمنع إدخال قيمة أكبر من 600
             table1Body.append(`
                 <tr>
                     <td>${index + 1}</td>
                     <td class="text-start operation-name">${op}</td>
-                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm fast-time"><span>ثانية</span></div></td>
-                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm avg-time"><span>ثانية</span></div></td>
-                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm slow-time"><span>ثانية</span></div></td>
+                    <td><div class="input-wrapper"><input type="number" max="600" oninput="if(this.value>600)this.value=600;" class="form-control form-control-sm fast-time"><span>ثانية</span></div></td>
+                    <td><div class="input-wrapper"><input type="number" max="600" oninput="if(this.value>600)this.value=600;" class="form-control form-control-sm avg-time"><span>ثانية</span></div></td>
+                    <td><div class="input-wrapper"><input type="number" max="600" oninput="if(this.value>600)this.value=600;" class="form-control form-control-sm slow-time"><span>ثانية</span></div></td>
                     <td><input type="text" class="form-control form-control-sm note-time w-100"></td>
                 </tr>
             `);
@@ -278,17 +299,42 @@
 
         const table2Body = $('#table2Body');
         currencyCategories.forEach((cat, index) => {
+            // تم تغيير type="number" إلى type="text" وكلمة مليون إلى ريال
             table2Body.append(`
                 <tr>
                     <td>${index + 1}</td>
                     <td class="currency-name">فئة ${cat}</td>
-                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm fast-count"><span>مليون</span></div></td>
-                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm avg-count"><span>مليون</span></div></td>
-                    <td><div class="input-wrapper"><input type="number" class="form-control form-control-sm slow-count"><span>مليون</span></div></td>
+                    <td><div class="input-wrapper"><input type="text" class="form-control form-control-sm fast-count currency-input"><span>ريال</span></div></td>
+                    <td><div class="input-wrapper"><input type="text" class="form-control form-control-sm avg-count currency-input"><span>ريال</span></div></td>
+                    <td><div class="input-wrapper"><input type="text" class="form-control form-control-sm slow-count currency-input"><span>ريال</span></div></td>
                     <td><input type="text" class="form-control form-control-sm note-count w-100"></td>
                 </tr>
             `);
         });
+
+        // معالجة حقول المبالغ: تحويل الأرقام وإضافة الفواصل
+        $(document).on('input', '.currency-input', function() {
+            let val = convertArabicToEnglish($(this).val());
+            val = val.replace(/[^0-9]/g, ''); // إزالة أي نصوص
+            if (val) {
+                $(this).val(parseInt(val, 10).toLocaleString('en-US'));
+            } else {
+                $(this).val('');
+            }
+        });
+
+        // كود الانتقال التلقائي عند الضغط على زر Enter
+        $(document).on('keypress', '#reportSection input', function(e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                var inputs = $('#reportSection input:visible:not([readonly])');
+                var index = inputs.index(this);
+                if (index !== -1 && index < inputs.length - 1) {
+                    inputs.eq(index + 1).focus();
+                }
+            }
+        });
+
     });
 
     function verifyUser() {
@@ -325,8 +371,8 @@
     async function submitData() {
         let allValid = true;
         
-        // تعديل السطر التالي ليفحص الحقول المرئية فقط
-        $('input[type=number]:visible').each(function() {
+        // تعديل السطر التالي ليفحص الحقول المرئية المطلوبة للوقت والمبالغ
+        $('#reportSection input.fast-time, #reportSection input.avg-time, #reportSection input.slow-time, #reportSection input.fast-count, #reportSection input.avg-count, #reportSection input.slow-count').filter(':visible').each(function() {
             if(!$(this).val()) {
                 $(this).addClass('is-invalid');
                 allValid = false;
@@ -356,9 +402,10 @@
         $('#table2Body tr').each(function() {
             table2.push({
                 name: $(this).find('.currency-name').text(),
-                fast: $(this).find('.fast-count').val(),
-                avg: $(this).find('.avg-count').val(), 
-                slow: $(this).find('.slow-count').val(),
+                // إزالة الفواصل من المبالغ قبل الإرسال للسيرفر لضمان حفظها كرقم صحيح
+                fast: $(this).find('.fast-count').val().replace(/,/g, ''),
+                avg: $(this).find('.avg-count').val().replace(/,/g, ''), 
+                slow: $(this).find('.slow-count').val().replace(/,/g, ''),
                 note: $(this).find('.note-count').val()
             });
         });
